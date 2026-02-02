@@ -2,9 +2,8 @@
  * API CONFIG
  ******************************************************/
 
-// Schools paste their Apps Script URL here (we also load it from config sheet)
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa76g7obJbQL9au7m4Syt-u2w6Yj-fTD8kzJoG4IALgFc6iQP5dH4AeT40OS7ugiSi/exec";
-;
+// Your new deployed URL
+const APPS_SCRIPT_URL = "https://script.google.com/a/macros/berrienresa.org/s/AKfycbznQVqPrweUfNRV58WmvCqhAcztd9XIJa4kxq5GzEiCO76YUgEFir_YlG-EZVESPWPe/exec";
 
 
 /******************************************************
@@ -13,10 +12,13 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa76g7obJbQL9a
 async function callScript(action, payload = {}) {
   const body = JSON.stringify({ action, payload });
 
+  // Note: 'credentials: "include"' is often needed for Org-restricted scripts
+  // so the browser sends the user's cookies.
   const response = await fetch(APPS_SCRIPT_URL, {
     method: "POST",
     body: body,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+    // ^ specific header helps avoid CORS pre-flight issues in some simple requests
   });
 
   return response.json();
